@@ -104,16 +104,44 @@ void sort(list head) {
 void del(list head) {
     list tmp,tmp_one;
     int del_key,k;
-    print(list);
     printf("\n1.Delete begin\n2.Delete at end\n3.Delete in between");
-    
-    scanf("%d\n", &k);
-    tmp = head;
-    while (tmp) {
-        if (tmp->data == key) {
-            tmp_one->next = tmp->next;
-        }
-    }
+    scanf("%d",&k);
+   switch(k)
+    {
+    case 1: temp_one=head;
+    temp=head->next;
+    head=temp;
+    temp_one->next=NULL;
+    free(temp_one);
+    break;
+    case 2:
+    temp=head;
+       while(temp->next!=NULL)
+         {
+          temp_one=temp;
+          temp=temp->next;
+         }
+          temp_one->next=NULL;
+          free(temp);
+       break;
+    case 3:
+    printf("\nEnter node which you want to delete:");
+    scanf("%d",&del_key);
+     temp=head;
+     while(temp!=NULL)
+       {
+         if(temp->data==del_key)
+     {
+      temp_one->next=temp->next;
+      temp->next=NULL;
+      free(temp);
+     }
+    temp_one=temp;
+    temp=temp->next;
+       }
+    break;
+     }
+}
 
 }
 void length(list head){
