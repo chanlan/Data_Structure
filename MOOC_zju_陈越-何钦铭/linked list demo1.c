@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]) {
     head = creat();
     print(head);
     do {
-        printf("\nMENUE\n1.add\n2.Delete\n3.Search\n4.Recerse\n5.Sort\n6.Exit");
+        printf("\nMENUE\n1.add\n2.Delete\n3.Search\n4.Recerse\n5.Sort\n6.Exit\n7.print");
         printf("\nEnter your choice:");
         scanf("%d", &ch);
         switch (ch) {
@@ -31,9 +31,10 @@ int main(int argc, char const *argv[]) {
             case 4: reverse(head); print(head); break;
             case 5: sort(head); print(head); break;
             case 6: exit(0);
+            case 7: print(head); break;
             default: break;
         }
-    } while(ch < 6);
+    } while(ch < 7);
     return 0;
 }
 list creat(){
@@ -61,7 +62,7 @@ list creat(){
 void print(list head){
     list tmp;
     tmp = head;
-    if(tmp){
+    while (tmp){
         printf("\t<-%d->", tmp->data);
         tmp = tmp->next;
     }
@@ -102,15 +103,14 @@ void sort(list head) {
     }
 }
 void del(list head){
-    list tmp , tmp_one;
+    list tmp, tmp_one;
     int del_key, key;
     printf("1.Delete begin\n2.Delete end\n3.Delete k\n");
     scanf("%d",&key);
     switch (key) {
         case 1:
             tmp_one = head;
-            tmp = head->next;
-            head = tmp;
+            head = head->next;
             tmp_one->next = NULL;
             free(tmp_one);
             break;
@@ -121,7 +121,8 @@ void del(list head){
                 tmp = tmp->next;
             }
             tmp_one->next = NULL;
-            free(tmp_one);
+            free(tmp);
+            break;
         case 3:
             printf("Enter the key to del\n");
             scanf("%d", &del_key);
@@ -136,7 +137,7 @@ void del(list head){
                 tmp = tmp->next;
             }
             break;
-    }
+        }
 }
 void reverse(list head){
     list tmp, tmp_one, tmp_two;
@@ -178,7 +179,6 @@ void add(list head){
             break;
         case 2:
             if(head == NULL){
-                tmp = head;
                 head = tmp_two;
                 tmp_two->next = NULL;
             }
@@ -188,7 +188,7 @@ void add(list head){
                     tmp = tmp->next;
                 }
                 tmp->next = tmp_two;
-                tmp = tmp_two;
+                tmp_two->next = NULL;
             }
             break;
         case 3:
