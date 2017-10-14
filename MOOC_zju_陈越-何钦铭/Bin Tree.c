@@ -33,7 +33,7 @@ void LevelorderTraversal(BinTree BT){ //队列实现
     BinTree T;
     if ( !BT ) return;
     Q = CreatQueue();
-    AddQ(Q,BT);
+    AddQ(Q, BT);
     while (!IsEmpty(Q)) {
         T = DeleteQ(Q);
         printf("%d ", T->Data);
@@ -41,6 +41,7 @@ void LevelorderTraversal(BinTree BT){ //队列实现
         if ( T->Right ) AddQ(Q, T->Right);
     }
 }
+//二叉搜索树
 BinTree Insert( BinTree BST, ElementType X){
     if (!BST) {
         BST = (BinTree)malloc(sizeof(struct TNode));
@@ -49,7 +50,15 @@ BinTree Insert( BinTree BST, ElementType X){
     }
     else {
         if(X < BST->Data)
-            BST->Left =
+            BST->Left = Insert(BST->Left, X);
+        else if( X > BST->Data)
+            BST->Right = Insert(BST->Right, X);
     }
-
+    return BST;
+}
+BinTree Delete( BinTree BST, ElementType X){
+    Position Tmp;
+    if (!BST) {
+        printf("NOT FOUND!");
+    }
 }
