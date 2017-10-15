@@ -1,4 +1,4 @@
-#define ElementType (int)
+#define ElementType int
 
 int BinarySearch(List Tbl, ElementType K){
     int left, right, mid, NoFound = -1;
