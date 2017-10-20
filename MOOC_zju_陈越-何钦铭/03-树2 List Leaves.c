@@ -2,25 +2,24 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct TNode *Tree;
+typedef struct TNode TNode;
 struct TNode {
     int v;
-    Tree Left;
-    Tree Right;
-};
-struct Node{
     int Left;
     int Right;
-} array[10];
+}array[10];
 
 int main(){
+    int i = 0;
     int n, Root;
     int check[10];
+    int num[10];
     for (int j = 0; j < 10; ++j) check[j] = 0;
     char n1,n2;
     scanf("%d\n", &n);
-    for(int i=0; i<n;i++){
+    for(i=0; i<n;i++){
         scanf("%c %c\n", &n1, &n2);
+        array[i].v = i;
         if(n1 != '-') {
             array[i].Left = n1 - '0';
             check[array[i].Left] = 1;
@@ -34,20 +33,30 @@ int main(){
         else
             array[i].Right = -1;
     }
-    for (int k = 0; k < n; ++k) {
-        if (!check[k]) {
-            Root = k;
-            break;
-        }
+    int k;
+    for ( k = 0; check[k]; ++k);
+    Root = k;
+    TNode queue[10], Node;
+    int front=0,rear = -1;
+    queue[++rear] = array[Root];
+    i = 0;
+    while(rear-front>=0){
+        Node = queue[front++];
+        if(Node.Left == -1 && Node.Right == -1)
+            num[i++]=Node.v;
+        else if(Node.Left != -1)
+            queue[++rear]=array[Node.Left];
+        else if(Node.Right != -1)
+            queue[++rear]=array[Node.Right];
     }
-    Tree T;
-    T = (Tree)malloc(sizeof(struct TNode));
-    T->v = Root;
-    T->Left = T->Right = NULL;
-    for(int i = 0;i < n-1;i++){
-        Tree tmp;
-        tmp = (Tree)malloc(sizeof(struct TNode));
-        T->
+    bool isFirst = 1;
+    for(int j=0; j< i; j++){
+        if(isFirst){
+            printf("%d", num[j]);
+            isFirst = 0;
+        }
+        else
+            printf(" %d",num[j]);
     }
     return 0;
 }
