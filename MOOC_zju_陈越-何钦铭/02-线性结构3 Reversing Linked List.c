@@ -8,7 +8,21 @@ struct Node{
     int next;
     LNode link;
 };
-
+LNode revers( LNode head, int K, int N){
+    int cnt =1;
+    LNode tmp,old,new;
+    new = head->link;
+    old = new ->link;
+    while(cnt < K){
+        tmp = old->link;
+        old->link = new;
+        new = old;
+        old = tmp;
+        cnt++;
+    }
+    head->link->link = old;
+    return new;
+}
 int main() {
     LNode head;
     head = (LNode)malloc(sizeof(struct Node));
@@ -40,24 +54,37 @@ int main() {
         tmp->link = head->link;
         head->link = tmp;
     }
+// It is a bad idea!! SORT
+    int count = 0;
     tmp = head->link;
-// sort
-    while(tmp->link->next != -1){
-        if(tmp->next != tmp->link->Adress){
-            tmp1 = tmp;
-            while(tmp->next != tmp1->Adress){
-                tmp2 =tmp1;
+    while(count < N-1) {
+        if (tmp->next == tmp->link->Adress) {
+            tmp = tmp->link;
+            count++;
+        } else {
+            tmp1 = tmp->link->link;
+            i = 0;
+            while (tmp->next != tmp1->Adress) {
+                tmp2 = tmp1;
                 tmp1 = tmp1->link;
+                i = 1;
             }
-            tmp2->link = tmp1->link;
-            tmp1 = tmp->link;
-            tmp->link = tmp1;
+            if (i == 1) {
+                tmp2->link = tmp1->link;
+                tmp1->link = tmp->link;
+                tmp->link = tmp1;
+                tmp = tmp->link;
+            } else {
+                tmp->link->link = tmp1->link;
+                tmp1->link = tmp->link;
+                tmp->link = tmp1;
+                tmp = tmp->link;
+            }
+            count++;
         }
     }
-    head = head->link;
-    for(i = 0; i < N; i++){
-        printf("%05d %d %05d\n",head->Adress, head->value, head->next);
-        head = head->link;
-    }
+    //Reversing Linked List
+    head = revers(head, K, N);
+
     return 0;
 }
