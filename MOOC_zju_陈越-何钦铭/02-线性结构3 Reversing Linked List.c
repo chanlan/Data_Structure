@@ -9,7 +9,7 @@ struct Node{
 }Node;
 
 int main() {
-    LNode List, tmpList, tmpNode, tmp, tmp1;
+    LNode List, tmpList, tmpNode, tmp;
     List = (LNode) malloc(sizeof(Node));
     List->next = NULL;
     int firstAdress;
@@ -23,53 +23,55 @@ int main() {
         tmpList->next = tmpNode;
         tmpList = tmpNode;
     }
-
-    tmp = (LNode)malloc(sizeof(struct Node));
-    tmp->next = NULL;
-    tmp1 = tmp;
+//sort
+    tmpNode = (LNode)malloc(sizeof(struct Node));
+    tmpNode->next = NULL;
+    tmp = tmpNode;
     int findAddress = firstAdress;
     int count = 0;//有多余结点不在链表上
     while(findAddress != -1){
         tmpList = List;
         while(tmpList->next){
             if(tmpList->next->address == findAddress){
-                tmp1->next = tmpList->next;
+                tmp->next = tmpList->next;
                 tmpList->next = tmpList->next->next;
-                tmp1 = tmp1->next;
-                findAddress = tmp1->nextAddress;
+                tmp = tmp->next;
+                findAddress = tmp->nextAddress;
                 count++;
             }else{
                 tmpList = tmpList->next;
             }
         }
     }
-    List = tmp;
+    tmp->next=NULL;
+    List = tmpNode;
     //reversing
-    tmp = (LNode)malloc(sizeof(Node));
-    tmp->next = NULL;
-    LNode p3 = tmp;
-    LNode p2 = List;
-    LNode tail, q3;
     int n = count;
-    int k = K;
-    while(n >= k){
-        n -= k;
-        for(i=0; i < k; i++){
-            p3->next = p2->next;
-            p2->next = p2->next->next;
-            if(i == 0)
-                tail = p3->next;
+    LNode tail,tmpRm;
+    tmpList = List;
+    tmpNode = (LNode)malloc(sizeof(struct Node));
+    tmpNode->next = NULL;
+    tmp = tmpNode;
+    while(n>=K){
+        n -= K;
+        for(int i=0; i< K; i++){
+            tmp->next = tmpList->next;
+            tmpList->next = tmpList->next->next;
+            if(i==0)
+                tail = tmp->next;
             else
-                p3->next->next = q3;
-            q3 = p3->next;
+                tmp->next->next = tmpRm;
+            tmpRm = tmp->next;
         }
-        p3 = tail;
+            tmp = tail;
     }
-    List = tmp->next;
-    while(List->next){
-        printf("%05d %d %05d\n", List->address, List->data, List->nextAddress);
-        List = List->next;
+    tmp->next = List->next;
+    tmp = tmpNode->next;
+
+    while(tmp->next){
+        printf("%05d %d %05d\n", tmp->address, tmp->data, tmp->next->address);
+        tmp = tmp->next;
     }
-    printf("%05d %d -1",List->address, List->data);
+    printf("%05d %d -1",tmp->address, tmp->data);
     return 0;
 }
