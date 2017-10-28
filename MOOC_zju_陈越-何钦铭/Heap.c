@@ -15,7 +15,7 @@ typedef Heap MinHeap;
 #define MAXDATA 1000 // accoding to the need
 MaxHeap CreateHeap (int MaxSize){
     MaxHeap H = (MaxHeap)malloc(sizeof(struct HNode));
-    H->Data = (ElementType*)malloc(sizeof(struct HNode));
+    H->Data = (ElementType*)malloc((MaxSize+1)*sizeof(ElementType));
     H->Size = 0;
     H->Capacity = MaxSize;
     H->Data[0] = MAXDATA;
