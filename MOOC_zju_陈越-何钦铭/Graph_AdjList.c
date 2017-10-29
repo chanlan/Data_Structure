@@ -80,3 +80,15 @@ LGraph BuildGraph(){
         scanf("%c", &(Graph->G[V].Data));
     return Graph;
 }
+void Visit(Vertex V){
+    printf("Vist the node %d", V);
+}
+void DFS(LGraph Graph, Vertex V, void(*Visit)(Vertex)){
+    bool Visited[MaxVertexNum];
+    PtrToAdjVNode W;
+    Visit(V);
+    Visited[V] = true;
+    for(W=Graph->G[V].FirstEdage; W; W=W->Next)
+        if(!Visited[W->AdjV])
+            DFS(Graph, W->AdjV, Visit);
+}
