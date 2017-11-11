@@ -1,5 +1,5 @@
 bool IsEdge(MGraph Graph, Vertex V, Vertex W){
-	return Graph->G[V][W] < INFINITy ? true : false;
+	return Graph->G[V][W] < INFINITY ? true : false;
 }
 void BFS(Mgraph Graph, Vertex S, void (*Visit)(Vertex)){
 	Queue Q;
