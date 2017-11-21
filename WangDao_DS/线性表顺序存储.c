@@ -1,131 +1,115 @@
-bool Del_Min(sqList &L, ElemType &value) {
-	if (L.length == 0)
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#define ElemType int
+//2.2.1顺序表的定义
+//静态分配顺序表
+#define MaxSize 50
+typedef struct {
+	ElemType data[MaxSize];
+	int length;
+}SqList;
+// 动态分配顺序表
+#define InitSize 100
+typedef struct {
+	ElemType *data;
+	int MaxSize, length;
+}SqList;
+//C:
+L = (ElemType*)malloc(sizeof(SqList));
+//C++:
+L = new ElemType[InitSize];
+//注意表的索引从0开始，位置i从1开始
+bool ListInsert(SqList &L, int i, ElemType e) {
+	if (i<1 || i>L.length + 1)
 		return false;
-	value = L.data[0];
-	int pos = 0
-	for(int i=1; i<L.length; i++)
-		if (L.data[i] < value) {
-			value = L.data[i];
-			pos = i;
-		}
-	L.data[pos] = L.data[L.length - 1];
+	if (L.length >= MaxSize)
+		return false;
+	for (int j = L.length; j >= i; j--)
+		L.data[j] = L.data[j - 1];
+	L.data[i - 1] = e;
+	L.length++;
+	return true;
+}
+bool ListDelete(SqList &L, int i, int &e) {
+	if (i < 1 || i >L.length)
+		return false;
+	e = L.Data[i - 1];
+	for (int j = i; j < L.length; j++) 
+		L.data[j - 1] = L.data[j];
 	L.length--;
 	return true;
 }
-void Reverse(SqList &L) {
-	ElemType temp;
-	for (i = 0; i < L.length / 2; i++) {
-		temp = L.data[i];
-		L.data[i] = L.data[L.length - 1 - i];
-		L.data[L.length - i - 1] = temp;
-	}
-}
-void Del_X_1(SqList &L, ElemType X) {
-	int k;
+//按值查找（顺序查找）
+int LocateElem(SqList L, ElemType e) {
+	int i;
 	for (i = 0; i < L.length; i++)
-		if (L.data[i] != X) {
-			L.data[K] = L.data[i];
-			k++;
+		if (L.data[i] == e)
+			return i + 1;
+	return 0;
+}
+void Reverse(int R[], int from, int to) {
+	int i, temp;
+	for (i = 0; i < (to - from + 1) / 2; i++) {
+		temp = R[from + i];
+		R[from + i] = R[from + i] = R[to - i];
+		R[to - i] = temp;
+	}
+}
+void Converse(int R[], int n, int p) {
+	Reverse(R, 0, p - 1);
+	Reverse(R, p, n - 1);
+	Reverse(R, 0, n - 1);
+}
+
+int M_Search(int A[], int B[], int n) {
+	int s1 = 0, d1 = n - 1, m1, s2 = 0, d2 = n - 1, m2;
+	while (s1 != d1 || s2 != d2) {
+		m1 = (s1 + d1) / 2;
+		m2 = (s2 + d2) / 2;
+		if (A[m1] == B[m2]) 
+			return A[m1];
+		if (A[m1] < B[m2]) {
+			if ((s1 + d1) % 2 == 0) {
+				s1 = m1;
+				d2 = m2;
+			}
+			else {
+				s1 = m1 + 1;
+				d2 = m2;
+			}
 		}
-	L.length = k;
+		else {
+			if ((s2 + d2) % 2 == 0) {
+				d1 = m1;
+				s2 = m2;
+			}
+			else {
+				d1 = m1;
+				s2 = m2 + 1;
+			}
+		}
+	}
+	return A[s1] < B[s2] ? A[s1] : B[s2];
 }
-void Del_X_2(Sqlist &L, ElemType X) {
-	int k = 0, i = 0;
-	while (i < L.length) {
-		if (L.data[i] == x)
-			k++;
+int Majority(int A[], int n) {
+	int i, c, count = 1;
+	c = A[0];
+	for (i = 1; i < n; i++)
+		if (A[i] == c)
+			count++;
 		else
-			L.data[i - k] = L.data[i];
-		i++;
-	}
-	L.length = L.length - k;
+			if (count > 0)
+				count--;
+			else {
+				c = A[i];
+				count = 1;
+			}
+			if (count > 0)
+				for (i = count = 0; i < n; i++)
+					if (A[i] == c)
+						count++;
+			if (count > n / 2) return c;
+			else return - 1;
 }
-bool Del_S_t2(SqList &L, ElemType , ElemType t) {
-	if (s >= t || L.length == 0)
-		return false;
-	for (i = 0; i < L.length&& L.data[i] < s; i++);
-	if (i >= L.length)
-		return false;
-	for (j = i; j < L.length&&L.data[j] <= t; j++);
-	for (; j < L.length; i++, j++)
-		L.data[i] = L.data[j];
-	L.length = i;
-	return true;
- }
-
-bool Del_S_t(SqList &L, ElemType s, ElemType t) {
-	int i, k=0;
-	if(L.length == 0 || s>=t)
-		return false;
-	for(i = 0; i< L.length; i++){
-		if(L.data[i] >= s && L.data[i] <= t)
-			k++;
-		else
-			L.data[i-k] = L.data[i];
-	}
-	L.length -= k;
-	return true;
-}
-bool Delete_Same(SqList &L){
-	if (L.length == 0)
-		return false;
-	for(i=0, j=1; j<length; j++)
-		if(L.data[i] != L.data[j])
-			L.data[++i] = L.data[j];
-	L.length = i+1;
-	return true;
-}
-bool Merge(SqList A, Sqlist B, SqList &C){
-	if(A.length +B.length > C.maxSize)
-		return false;
-	int i =0, j=0, k=0;
-	while(i < A.length && j<B.length){
-		if(A.data[i] <= B.data[j])
-			C.data[k++] = A.data[i++];
-		else
-			C.data[k++] = B.data[j++];
-	}
-	while(i < A.length)
-		C.data[k++] = A.data[i++];
-	while(i < B.length)
-		C.data[k++] = B.data[j++];
-	C.length = k;
-	return true;
-}
-typedef int DataType;
-void Reverse(DataType A[], int left, int right, int arraySize){
-	if(left >= right || right >= arraySize)
-		return ;
-	int mid = (left + right)/2;
-	for(int i=0; i<mid -left;i++){
-		DataType temp = A[left +i];
-		A[left + i] = A[right - i];
-		A[right-i] = temp;
-	}
-}
-void exchange(DataType A[], int m, int n, int arraySize){
-	Reverse(A, i, m+n-1, arraySize);
-	Reverse(A, 0, n-1, arraySize);
-	Reverse(A, n, m+n-1, arraySize);
-}
-void SearchExchangeInsert(ElemType A[], ElemType x){
-	int low =0, high = n-1, mid;
-	while(low <= high){
-		mid = (low +high)/2;
-		if(A[mid] == x) break;
-		else if(A[mid] < x) low = mid +1;
-		else high = mid -1;
-	}
-	if (A[mid] == x && mid != n-1){
-		t = A[mid]; 
-		A[mid] = A[mid+1];
-		A[mid+1] = t;
-	}
-	if (low >high){
-		for(i = n-1; i>high; i--) A[i+1] = A[i];
-		A[i+1] = x;
-	}
-}
-
-
 
