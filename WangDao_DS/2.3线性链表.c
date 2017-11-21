@@ -141,9 +141,43 @@ LinkList Delete_Min(LinkList &L){
     free(minp);
     return L;
 }
-//不用辅助空间Reverse链表
+//不用辅助空间Reverse带头结点的链表
 LinkList Reverse_l(LinkList L){
     LNode *p, *r;
     p = L->next;
-
+    L->next = NULL;
+    while(p != NULL){
+        r = p->next;
+        p->next = L->next;
+        L->next = p;
+        p = r;
+    }
+    return L;
+}
+LinkList Reverse_2(LinkList L){
+    LNode *pre, *p = L->next, *r = p->next;
+    p->next = NULL;
+    while(p != NULL){
+        pre = p;
+        p = r;
+        r = r->next;
+        p->next = pre;
+    }
+    L->next = p;
+    return L;
+}
+void Sort(LinkList L){
+    LNode *p = L->next, *pre;
+    LNode *r = p->next;
+    p->next = NULL;
+    p = r;
+    while(p != NULL){
+        r = p->next;
+        pre = L;
+        while(pre->next != NULL && pre->next->data<p->data)
+            pre = pre->next;
+        p->next = pre->next;
+        pre->next = p;
+        p = r;
+    }
 }
