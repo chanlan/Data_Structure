@@ -381,3 +381,72 @@ LinkList Union(LinkList &La, LinkList &Lb){
     free(Lb);
     return La;
 }
+//16.B{b1,...,bn}是否为A{a1,...am}的连续子序列
+bool Pattern(LinkList A, LinkList B){
+    LNode *p = A;
+    LNode *pre = p;
+    LNode *q = B;
+    while(p&&q){
+        if(q->data == p->data){
+            q = q->next;
+            p = p->next;
+        }
+        else{
+            pre = pre->next;
+            p = pre;
+            q = B;
+        }
+        if(q == NULL){
+            return 1;
+        return 0;
+        }
+    }
+}
+//17.判断一循环双链表是否对称
+bool Symmetry(LinkList L){
+    LNode *p = L->next, *q = L->prior;
+    while(p!=q && q->next!=p){
+        if(p->data == q->data){
+            p = p->next;
+            q = q->prior;
+        }
+        else
+            return 0;
+    }
+    return 1;
+}
+//18.将循环单链表h2链接到h1后面
+LinkList Link_H2_H1(LinkList &h1, LinkList &h2){
+    LNode *p, *q;
+    p = h1;
+    while (p->next != h1)
+        p = p->next;
+    q = h2;
+    while(q->next != h2)
+        q = q->next;
+    p->next = h2;
+    q->next = h1;
+    return h1;
+}
+//19.顺序删除循环链表中的最小值并输出
+void Del_All(LinkList L){
+    LNode *p, *pre, *minp, *minpre;
+    while(L->next != L){
+        pre = L;
+        p = pre->next;
+        minp = p;
+        minpre = pre;
+        while(p != L){
+            if(p->data < minp->data){
+                minp = p;
+                minpre = pre;
+            }
+            pre = p;
+            p = p->next;
+        }
+        printf("%d", minp->data);
+        minpre->next = minp->next;
+        free(minp);
+    }
+    free(L);
+}
