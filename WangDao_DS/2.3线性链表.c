@@ -450,3 +450,90 @@ void Del_All(LinkList L){
     }
     free(L);
 }
+//20.双向链表按频度排序查找x并返回指针
+LinkList Locate(LinkList &L, int X){
+    LNode *p = L->next, *q;
+    while(p&&p->data != x)
+        p = p->next;
+    if(!p){
+        printf("not exist!");
+        exit(0);
+    }
+    else{
+        p->freq++;
+        p->next->pre = p->pre;
+        p->pre->next = p->next;
+        q = p->pre;
+        while(q!=L&&q->freq <= p->freq)
+            q = q->pre;
+        p->next = q->next;
+        q->next->pre = p;
+        p->pre = q;
+        q->next = p;
+    }
+    return p;
+}
+//21
+int Search_K(LinkList L, int k){
+    LNode *p, *q;
+    p = L->next;
+    q = L->next;
+    int count = 0;
+    while(p!=NULL){
+        if(count < k) count++;
+        else q = q->next;
+        p = p->next;
+    }
+    if(count < k)
+        return 0;
+    else{
+        printf("%d", q->data);
+        return 1;
+    }
+}
+//22
+int ListLen(LNode *head){
+    int len = 0;
+    while(head->next != NULL){
+        len++;
+        head = head->next;
+    }
+    return len;
+}
+LNode* Find_addr(LNode *str1, LNode *str2){
+    int m, n;
+    m = ListLen(str1), n = ListLen(str2);
+    LNode *p, *q;
+    for(p=str1; m>n; m--){
+        p = p->next;
+    }
+    for(q = str2; m<n; n--){
+        q = q->next;
+    }
+    while(p->next != NULL && p->next != q->next){
+        p = p->next;
+        q = q->next;
+    }
+    return p->next;
+}
+//23
+void Del_same_abs(LNode *h, int n){
+    LNode *p = h, *r;
+    int *q, m;
+    q = (int*)malloc(sizeof(int)*(n+1));
+    for(int i=0; i < n+1; i++)
+        *(q+i) = 0;
+    while(p->next != NULL){
+        m = p->next->data>0?p->next->data:-p->next->data;
+        if(*(q+m) == 0){
+            *(q+m) = 1;
+            p = p->next;
+        }
+        else{
+            r = p->next;
+            p->next = r->next;
+            free(r);
+        }
+    }
+    free(q);
+}
