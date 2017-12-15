@@ -75,3 +75,42 @@ bool DeLQueue(LinkQueue LQ, ElemType* x){
     return true;
 }
 //1D 2B 3D 4B 5D 6C 7B 8B 9C 10A 11B 12A 13A 14D 15D 16B 17C 18B
+
+//1.tag标记01表示front rear相等时空还是满的如队出队操作
+bool EnTagQueue(SqQueue Q, ElemType x){
+    if(Q.front == Q.rear && Q.tag == 1) return false;
+    Q.data[Q.rear] = x;
+    Q.rear = (Q.rear+1)%MaxSize;
+    Q.tag = 1;
+    return true;
+}
+bool DeTagQueue(SqQueue Q, ElemType* x){
+    if(Q.front = Q.rear && Q.tag == 0) return false;
+    *x = Q.data[Q.front];
+    Q.front = (Q.front+1)%MaxSize;
+    Q.tag = 0;
+    return true;
+}
+
+//2.队Q栈S逆置Q
+void Inverser(Stack S, SqQueue Q){
+    while(!IsLQEmpty(Q)){
+        int x;
+        DeQueue(Q, x);
+        Push(S,x);
+    }
+    while(!StackEmpty(S)){
+        int x;
+        Pop(S, x);
+        EnQueue(Q, x);
+    }
+}
+
+//3. Push(S,x) Pop(S,x) StackEmpty(S) StackOverflow(S) 实现EnQueue DeQueue QueueEmpty
+bool EnSQueue(Stack S1, Stack S2, ElemType e){
+    if(!StackOverflow(S1)){
+        Push(S1, x);
+        return true;
+    }
+    if(StackOverflow(S1) && )
+}
