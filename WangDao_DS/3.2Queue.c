@@ -107,10 +107,41 @@ void Inverser(Stack S, SqQueue Q){
 }
 
 //3. Push(S,x) Pop(S,x) StackEmpty(S) StackOverflow(S) 实现EnQueue DeQueue QueueEmpty
-bool EnSQueue(Stack S1, Stack S2, ElemType e){
+bool EnSQueue(Stack S1, Stack S2, ElemType x){
     if(!StackOverflow(S1)){
         Push(S1, x);
-        return true;
+        return 1;
     }
-    if(StackOverflow(S1) && )
+    if(StackOverflow(S1)&& !StackEmpty(S2)){
+        printf("Queue full");
+        return 0;
+    }
+    if(StackOverflow(S1) && StackEmpty(S2)){
+        while(!StackEmpty(S1)){
+            Pop(S1,x);
+            Push(S2,x);
+        }
+    }
 }
+bool DeSQueue(Stack S1, Stack S2, ElemType x){
+    if(!StackEmpty(S2)){
+        Pop(S2, x);
+    }
+    else if(StackEmpty(S1)){
+        printf("Queue Empty");
+    }
+    else{
+        while(!StackEmpty(S1)){
+            Pop(S1, x);
+            Push(S2, x);
+        }
+        Pop(S2, x);
+    }
+}
+bool IsQueueEmpty(Stack S1, Stack S2){
+    if(StackEmpty(S1)&&StackEmpty(S2))
+        return 1;
+    return 0;
+}
+//3.3栈和队列的应用
+//1D 2B 3C 4B 5 6B 7B 8C 9B 10A 11A 12B 13A
