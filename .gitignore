@@ -1,4 +1,5 @@
-
+*a.out
 *.exe
 .vscode/launch.json
 .vscode/tasks.json
+a.out.dSYM/*
