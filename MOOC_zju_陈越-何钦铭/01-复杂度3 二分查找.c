@@ -29,26 +29,27 @@ int main()
     return 0;
 }
 /* 你的代码将被嵌在这里 */
-Position BinarySearch( List L, ElementType X ){
+Position BinarySearch(List L, ElementType X){
     Position left, right, mid;
     left = 1;
     right = L->Last;
     while(left <= right){
-        mid = (left + right) / 2;
+        mid = (left + right) /2;
         if(X > L->Data[mid])
             left = mid + 1;
-        else if( X < L->Data[mid])
-            right = mid -1;
+        else if(X < L->Data[mid])
+            right = mid - 1;
         else
             return mid;
     }
     return NotFound;
 }
+
 List ReadInput(){
     List tmp;
     tmp = (List)malloc(sizeof(struct LNode));
     scanf("%d", &tmp->Last);
-    for(int i = 0; i < tmp->Last; i++)
+    for(int i = 1; i <= tmp->Last; i++)
         scanf("%d", &tmp->Data[i]);
     return tmp;
 }
