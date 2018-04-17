@@ -15,7 +15,7 @@ Queue CreateQueue( int MaxSize ){
 }
 
 bool isFull( Queue Q ){
-    return((Q->Front+1) % Q->MaxSize == Q->Front);
+    return((Q->Rear+1) % Q->MaxSize == Q->Front);
 }
 bool AddQ( Queue Q, ElementType X ){
     if(isFull(Q)){
