@@ -1,4 +1,4 @@
-#include <cstdio>
++1#include <cstdio>
 #include <cstdlib>
 
 typedef struct HNode *Heap;
@@ -51,7 +51,7 @@ ElementType DeleteMax(MaxHeap H){
 	}
 	MaxItem = H->Data[1];
 	X = H->Data[H->Size--];
-	for(parent = 1; parent*2 < H->Size; parent = child){
+	for(parent = 1; parent*2 <= H->Size; parent = child){
 		child = parent *2;
 		if((child != H->Size) &&  (H->Data[child] < (H->Data[child+1])))
 			child++;
