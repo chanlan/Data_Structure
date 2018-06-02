@@ -106,7 +106,17 @@ void scanAndOutput( HashTable H ){
 }
 
 void destroyTable( HashTable H ){
-	free(H->Heads);
+    int i;
+    Position P, tmp;
+    for(i = 0; i < H->TableSize; i++){
+        P = H->Heads[i].Next;
+        while(P){
+            tmp = P->Next;
+            free(P);
+            P = tmp;
+        }
+    }
+    free(H->Heads);
 	free(H);
 }
 
